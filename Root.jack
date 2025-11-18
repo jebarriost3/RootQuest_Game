@@ -1,0 +1,64 @@
+class Root {
+    field int x, y;
+    field int direction;
+    
+    constructor Root new() {
+        let x = 256;
+        let y = 10;
+        let direction = 0;
+        return this;
+    }
+    
+    method void setPosition(int newX, int newY) {
+        let x = newX;
+        let y = newY;
+        
+        // Limpiar posición anterior
+        do Screen.setColor(false);  // Blanco (borrar)
+        do Screen.drawPixel(x, y - 1);
+        do Screen.drawPixel(x, y - 2);
+        do Screen.setColor(true);   // Negro (dibujar)
+        
+        return;
+    }
+    
+    method int getX() {
+        return x;
+    }
+    
+    method int getY() {
+        return y;
+    }
+    
+    method void grow() {
+        var int key;
+        
+        // Leer input
+        let key = Keyboard.keyPressed();
+        
+        // Cambiar dirección
+        if (key = 130) { let direction = -1; }  // Izquierda
+        if (key = 132) { let direction = 1; }   // Derecha
+        if (key = 131) { let direction = 0; }   // Centro
+        
+        // Borrar posición anterior
+        do Screen.setColor(false);
+        do Screen.drawPixel(x, y - 3);
+        
+        // Mover raíz
+        let x = x + direction;
+        let y = y + 1;
+        
+        // Limitar bordes
+        if (x < 5) { let x = 5; }
+        if (x > 507) { let x = 507; }
+        
+        // Dibujar nueva posición
+        do Screen.setColor(true);
+        do Screen.drawPixel(x, y);
+        do Screen.drawPixel(x, y - 1);
+        do Screen.drawPixel(x, y - 2);
+        
+        return;
+    }
+}

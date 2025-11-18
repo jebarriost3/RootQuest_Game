@@ -1,0 +1,168 @@
+class Game {
+    field Root root;
+    field int score;
+    field boolean gameOver;
+    field int waterLevel;
+    
+    constructor Game new(Root r) {
+        let root = r;
+        let score = 0;
+        let gameOver = false;
+        let waterLevel = 240;
+        return this;
+    }
+    
+    method void run() {
+        do Screen.clearScreen();
+        do Screen.setColor(true);
+        
+        // Dibujar interfaz
+        do Output.moveCursor(0, 0);
+        do Output.printString("Root Quest - Score: ");
+        do Output.printInt(score);
+        
+        // Dibujar línea de agua en el fondo
+        do Screen.drawLine(0, waterLevel, 511, waterLevel);
+        
+        // Dibujar muchos obstáculos
+        do drawManyObstacles();
+        
+        // Inicializar raíz en posición central
+        do root.setPosition(256, 10);
+        
+        while (~gameOver) {
+            do root.grow();
+            do checkWater();
+            do checkCollisions();
+            do Sys.wait(30);
+        }
+        
+        // Game Over
+        do Output.moveCursor(12, 20);
+        do Output.printString("GAME OVER - Final Score: ");
+        do Output.printInt(score);
+        return;
+    }
+    
+    method void drawManyObstacles() {
+        do Screen.setColor(true);
+        
+        // Fila 1 de obstáculos
+        do Screen.drawRectangle(50, 50, 60, 60);
+        do Screen.drawRectangle(120, 70, 130, 80);
+        do Screen.drawRectangle(200, 40, 210, 50);
+        do Screen.drawRectangle(280, 80, 290, 90);
+        do Screen.drawRectangle(350, 60, 360, 70);
+        do Screen.drawRectangle(420, 30, 430, 40);
+        do Screen.drawRectangle(470, 70, 480, 80);
+        
+        // Fila 2 de obstáculos
+        do Screen.drawRectangle(80, 120, 90, 130);
+        do Screen.drawRectangle(150, 140, 160, 150);
+        do Screen.drawRectangle(220, 110, 230, 120);
+        do Screen.drawRectangle(300, 150, 310, 160);
+        do Screen.drawRectangle(370, 130, 380, 140);
+        do Screen.drawRectangle(440, 100, 450, 110);
+        do Screen.drawRectangle(490, 140, 500, 150);
+        
+        // Fila 3 de obstáculos
+        do Screen.drawRectangle(60, 180, 70, 190);
+        do Screen.drawRectangle(130, 200, 140, 210);
+        do Screen.drawRectangle(180, 170, 190, 180);
+        do Screen.drawRectangle(250, 210, 260, 220);
+        do Screen.drawRectangle(320, 190, 330, 200);
+        do Screen.drawRectangle(390, 160, 400, 170);
+        do Screen.drawRectangle(460, 200, 470, 210);
+        
+        // Algunos obstáculos grandes
+        do Screen.drawRectangle(100, 90, 120, 100);   // Piedra ancha
+        do Screen.drawRectangle(300, 130, 320, 150);  // Piedra alta
+        do Screen.drawRectangle(450, 180, 470, 200);  // Piedra cuadrada grande
+        
+        return;
+    }
+    
+    method void checkWater() {
+        var int rootY;
+        let rootY = root.getY();
+        
+        if (rootY > waterLevel) {
+            let score = score + 10;
+            do Output.moveCursor(0, 25);
+            do Output.printString("Score: ");
+            do Output.printInt(score);
+            do Output.moveCursor(2, 0);
+            do Output.printString("¡Agua encontrada! +10");
+            do Sys.wait(100);
+            do root.setPosition(256, 10);
+        }
+        return;
+    }
+    
+    method void checkCollisions() {
+        var int rootX, rootY;
+        let rootX = root.getX();
+        let rootY = root.getY();
+        
+        // Colisiones con TODOS los obstáculos - Fila 1
+        if (checkSingleCollision(rootX, rootY, 50, 50, 60, 60)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 120, 70, 130, 80)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 200, 40, 210, 50)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 280, 80, 290, 90)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 350, 60, 360, 70)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 420, 30, 430, 40)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 470, 70, 480, 80)) { do gameOver(); }
+        
+        // Fila 2
+        if (checkSingleCollision(rootX, rootY, 80, 120, 90, 130)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 150, 140, 160, 150)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 220, 110, 230, 120)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 300, 150, 310, 160)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 370, 130, 380, 140)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 440, 100, 450, 110)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 490, 140, 500, 150)) { do gameOver(); }
+        
+        // Fila 3
+        if (checkSingleCollision(rootX, rootY, 60, 180, 70, 190)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 130, 200, 140, 210)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 180, 170, 190, 180)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 250, 210, 260, 220)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 320, 190, 330, 200)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 390, 160, 400, 170)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 460, 200, 470, 210)) { do gameOver(); }
+        
+        // Obstáculos grandes
+        if (checkSingleCollision(rootX, rootY, 100, 90, 120, 100)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 300, 130, 320, 150)) { do gameOver(); }
+        if (checkSingleCollision(rootX, rootY, 450, 180, 470, 200)) { do gameOver(); }
+        
+        // Colisión con bordes
+        if (rootX < 2) { do gameOver(); }
+        if (rootX > 510) { do gameOver(); }
+        
+        return;
+    }
+    
+    method boolean checkSingleCollision(int rx, int ry, int x1, int y1, int x2, int y2) {
+        if (rx > x1) {
+            if (rx < x2) {
+                if (ry > y1) {
+                    if (ry < y2) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    method void addScore(int points) {
+        let score = score + points;
+        return;
+    }
+    
+    method void gameOver() {
+        let gameOver = true;
+        return;
+    }
+}

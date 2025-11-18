@@ -1,0 +1,12 @@
+class Main {
+    function void main() {
+        var Root root;
+        var Game game;
+        
+        let root = Root.new();
+        let game = Game.new(root);
+        
+        do game.run();
+        return;
+    }
+}
