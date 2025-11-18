@@ -25,10 +25,11 @@
 - **Movimiento Automático**: La raíz crece hacia abajo constantemente
 
 ## 📁 Estructura del Proyecto
-RootQuest/
-├── Main.jack # Punto de entrada del programa
-├── Game.jack # Lógica principal del juego
-├── Root.jack # Control de la raíz del jugador
+
+RootQuest/  
+├── **Main.jack** — Punto de entrada del programa  
+├── **Game.jack** — Lógica principal del juego  
+├── **Root.jack** — Control y comportamiento de la raíz del jugador  
 
 
 ## 🚀 Instrucciones de Ejecución
