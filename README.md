@@ -39,9 +39,9 @@ RootQuest/
 4. Esquivar obstáculos y llegar al agua para sumar puntos
 
 ## Video Demostración
-[ENLACE DEL VIDEO DE YOUTUBE AQUÍ]
+https://youtu.be/Ie2WGhWnm9A
 
-## 📊 Características Técnicas
+## Características Técnicas
 - **Pantalla**: 512x256 píxeles
 - **Obstáculos**: obstáculos distribuidos estratégicamente
 - **Puntuación**: +10 puntos por cada vez que se alcanza el agua
