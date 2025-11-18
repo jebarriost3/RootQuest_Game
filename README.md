@@ -10,8 +10,8 @@
 - Mecánica de crecimiento realista de raíces
 
 ## 👥 Equipo de Desarrollo
-- [Juan Esteban Barrios Tovar]
-- [Alejandro Garcia Cortes] 
+- Juan Esteban Barrios Tovar
+- Alejandro Garcia Cortes
 
 ## 🛠️ Tecnologías Utilizadas
 - **Lenguaje**: Jack
